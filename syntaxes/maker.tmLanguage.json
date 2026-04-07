@@ -1,0 +1,135 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "MAKER Build Engine",
+  "scopeName": "source.maker",
+  "fileTypes": ["mkp", "mkc", "mke", "mks"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#section-headers" },
+    { "include": "#predicates" },
+    { "include": "#macros" },
+    { "include": "#variables-at" },
+    { "include": "#commands-doubledash" },
+    { "include": "#string-values" },
+    { "include": "#operators" },
+    { "include": "#keywords" },
+    { "include": "#inheritance" },
+    { "include": "#source-files" }
+  ],
+  "repository": {
+    "comments": {
+      "comment": "Linha de comentário iniciada com #",
+      "name": "comment.line.number-sign.maker",
+      "match": "^\\s*#.*$"
+    },
+    "section-headers": {
+      "comment": "Seções entre colchetes como [SOURCES], [FLAGS], etc.",
+      "name": "entity.name.section.maker",
+      "match": "^\\s*\\[([A-Z_][A-Z0-9_]*)\\]\\s*$",
+      "captures": {
+        "1": { "name": "entity.name.section.maker" }
+      }
+    },
+    "predicates": {
+      "comment": "Lógica condicional ?[condicao]...: ",
+      "patterns": [
+        {
+          "comment": "Bloco predicado completo ?[cond]: valor",
+          "name": "meta.predicate.maker",
+          "match": "(\\?\\[)([^\\]]*)(\\])(.*?)(:)",
+          "captures": {
+            "1": { "name": "keyword.control.predicate.open.maker" },
+            "2": { "name": "variable.other.predicate.condition.maker" },
+            "3": { "name": "keyword.control.predicate.close.maker" },
+            "4": { "name": "string.unquoted.predicate.value.maker" },
+            "5": { "name": "keyword.control.predicate.colon.maker" }
+          }
+        },
+        {
+          "comment": "Predicado apenas com abertura ?[cond]",
+          "name": "meta.predicate.inline.maker",
+          "match": "(\\?\\[)([^\\]]*)(\\])",
+          "captures": {
+            "1": { "name": "keyword.control.predicate.open.maker" },
+            "2": { "name": "variable.other.predicate.condition.maker" },
+            "3": { "name": "keyword.control.predicate.close.maker" }
+          }
+        }
+      ]
+    },
+    "macros": {
+      "comment": "Macros no padrão $[NomeDaMacro]",
+      "name": "meta.macro.maker",
+      "match": "(\\$\\[)([A-Za-z_][A-Za-z0-9_]*)(\\])",
+      "captures": {
+        "1": { "name": "punctuation.definition.macro.begin.maker" },
+        "2": { "name": "variable.other.macro.maker" },
+        "3": { "name": "punctuation.definition.macro.end.maker" }
+      }
+    },
+    "variables-at": {
+      "comment": "Variáveis/referências iniciadas com @",
+      "name": "meta.variable.at.maker",
+      "match": "(@)([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": { "name": "punctuation.definition.variable.maker" },
+        "2": { "name": "variable.other.reference.maker" }
+      }
+    },
+    "commands-doubledash": {
+      "comment": "Comandos/diretivas iniciados com --",
+      "name": "meta.command.maker",
+      "match": "(--[a-z][a-z0-9\\-]*)(\\s*=\\s*)?([^\\s#]*)?",
+      "captures": {
+        "1": { "name": "support.function.command.maker" },
+        "2": { "name": "keyword.operator.assignment.maker" },
+        "3": { "name": "string.unquoted.command.value.maker" }
+      }
+    },
+    "string-values": {
+      "comment": "Strings entre aspas duplas",
+      "name": "string.quoted.double.maker",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        { "include": "#macros" },
+        { "include": "#variables-at" }
+      ]
+    },
+    "operators": {
+      "comment": "Operadores de atribuição e separadores",
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.maker",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.separator.maker",
+          "match": "[,;]"
+        }
+      ]
+    },
+    "keywords": {
+      "comment": "Palavras-chave conhecidas do MAKER",
+      "name": "keyword.other.maker",
+      "match": "(?i)\\b(include|inherit|define|undef|if|else|endif|set|unset|export)\\b"
+    },
+    "inheritance": {
+      "comment": "Arquivo .mkc referenciado por herança (ex: inherit base.mkc)",
+      "name": "meta.inheritance.maker",
+      "match": "(?i)(inherit|include)\\s+([^\\s#]+\\.mkc)",
+      "captures": {
+        "1": { "name": "keyword.control.inheritance.maker" },
+        "2": { "name": "entity.name.filename.mkc.maker" }
+      }
+    },
+    "source-files": {
+      "comment": "Arquivos fonte .c, .prg, .mks referenciados",
+      "name": "meta.source-file.maker",
+      "match": "\\b([A-Za-z0-9_\\-\\./ \\\\]+\\.(?:c|prg|mks|cpp|h))\\b",
+      "captures": {
+        "1": { "name": "entity.name.filename.source.maker" }
+      }
+    }
+  }
+}

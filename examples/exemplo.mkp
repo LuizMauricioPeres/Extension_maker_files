@@ -1,0 +1,57 @@
+# ============================================================
+# DEUS É FIEL
+# ------------------------------------------------------------
+# Projeto : ExemploApp
+# Tipo    : Executável
+# Autor   : Dev Harbour
+# Data    : 02/04/2026
+# Versão  : 1.0.0
+# ============================================================
+
+# Herança da configuração base — clique para navegar
+inherit ../config/base.mkc
+
+# Tipo e nome do projeto
+--projecttype=exe
+--projectname=ExemploApp
+--outputdir=$[OutputDir]
+--outputname=ExemploApp
+
+# Flags de compilação usando variáveis @
+--cflags=@GCC_FLAGS -DDEBUG
+--harbourflags=@HB_FLAGS -p
+--ldflags=@LD_FLAGS
+
+# Diretórios de include
+--includedir=@GCC_INC_DIRECTORY
+--includedir=./include
+--includedir=../shared/include
+
+# Bibliotecas
+--lib=@HARBOUR_LIBS
+--lib=utils
+--lib=modelo
+
+# Predicado: adiciona flag só no modo DEBUG
+?[DEBUG]--cflags=-g -O0:--cflags=-O2
+
+# Saída condicional
+?[VERBOSE]$[OutputDir]=./build/verbose:
+
+[SOURCES]
+# ---- Módulo Principal ----
+main.prg
+
+# ---- Módulos da Aplicação ----
+tela/frm_login.prg
+tela/frm_principal.prg
+modelo/cliente.prg
+modelo/produto.prg
+
+# ---- Utilitários C ----
+?[USE_NATIVE]helpers/nativo.c:
+
+# ---- Scripts MKS ----
+setup.mks
+
+[END]

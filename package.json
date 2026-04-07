@@ -1,0 +1,150 @@
+{
+  "name": "maker-language-support",
+  "displayName": "MAKER Build Engine - Language Support",
+  "description": "Syntax highlighting, navigation and snippets for the MAKER build engine (.mkp, .mkc, .mke)",
+  "version": "1.0.0",
+  "publisher": "harbour-tools",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "maker",
+    "harbour",
+    "build",
+    "mkp",
+    "mks",
+    "mkc",
+    "mke"
+  ],
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harbour-tools/maker-language-support"
+  },
+  "activationEvents": [
+    "onLanguage:maker-project",
+    "onLanguage:maker-source",
+    "onLanguage:maker-config",
+    "onLanguage:maker-rules"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "maker-project",
+        "aliases": ["MAKER Project", "mkp"],
+        "extensions": [".mkp"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/mkp-light.svg",
+          "dark": "./images/mkp-dark.svg"
+        }
+      },
+      {
+        "id": "maker-source",
+        "aliases": ["MAKER Source", "mks"],
+        "extensions": [".mks"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/mkp-light.svg",
+          "dark": "./images/mkp-dark.svg"
+        }
+      },
+      {
+        "id": "maker-config",
+        "aliases": ["MAKER Config", "mkc"],
+        "extensions": [".mkc"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/mkc-light.svg",
+          "dark": "./images/mkc-dark.svg"
+        }
+      },
+      {
+        "id": "maker-rules",
+        "aliases": ["MAKER Rules", "mke"],
+        "extensions": [".mke"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/mke-light.svg",
+          "dark": "./images/mke-dark.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "maker-project",
+        "scopeName": "source.maker",
+        "path": "./syntaxes/maker.tmLanguage.json"
+      },
+      {
+        "language": "maker-source",
+        "scopeName": "source.maker",
+        "path": "./syntaxes/maker.tmLanguage.json"
+      },
+      {
+        "language": "maker-config",
+        "scopeName": "source.maker",
+        "path": "./syntaxes/maker.tmLanguage.json"
+      },
+      {
+        "language": "maker-rules",
+        "scopeName": "source.maker",
+        "path": "./syntaxes/maker.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "maker-project",
+        "path": "./snippets/maker.code-snippets"
+      },
+      {
+        "language": "maker-source",
+        "path": "./snippets/maker.code-snippets"
+      },
+      {
+        "language": "maker-config",
+        "path": "./snippets/maker.code-snippets"
+      },
+      {
+        "language": "maker-rules",
+        "path": "./snippets/maker.code-snippets"
+      }
+    ],
+    "configuration": {
+      "title": "MAKER Language Support",
+      "properties": {
+        "maker.rootPath": {
+          "type": "string",
+          "default": "",
+          "description": "Caminho raiz base para resolução de arquivos fonte relativos."
+        },
+        "maker.enableDefinitionProvider": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilitar navegação (Ctrl+Click) para arquivos .mkc e fontes referenciados."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0"
+  }
+}

@@ -1,0 +1,27 @@
+# ============================================================
+# DEUS É FIEL
+# ------------------------------------------------------------
+# Config  : base.mkc
+# Desc    : Configuração base para projetos Harbour/GCC
+# ============================================================
+
+# --- Compilador GCC ---
+@GCC_PATH           = /usr/bin/gcc
+@GCC_FLAGS          = -Wall -Wextra -Wno-unused-parameter
+@GCC_INC_DIRECTORY  = /usr/include/harbour
+
+# --- Compilador Harbour ---
+@HB_PATH            = /usr/bin/harbour
+@HB_FLAGS           = -n -w3 -es2 -q0
+
+# --- Linker ---
+@LD_FLAGS           = -lstdc++ -lm -lpthread
+@HARBOUR_LIBS       = harbour hbrtl hblang hbcpage hbpcre hbzlib hbmacro hbpp
+
+# --- Diretórios de saída por modo ---
+?[DEBUG]$[OutputDir]=./build/debug:
+?[RELEASE]$[OutputDir]=./build/release:
+?[TEST]$[OutputDir]=./build/test:
+
+# --- Flags extras condicionais ---
+?[PROFILE]@GCC_FLAGS=-pg -g:
