@@ -29,7 +29,8 @@
     "onLanguage:maker-project",
     "onLanguage:maker-source",
     "onLanguage:maker-config",
-    "onLanguage:maker-rules"
+    "onLanguage:maker-rules",
+    "onLanguage:maker-header"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -73,6 +74,16 @@
           "light": "./images/mke-light.svg",
           "dark": "./images/mke-dark.svg"
         }
+      },
+      {
+        "id": "maker-header",
+        "aliases": ["MAKER Header", "mkh"],
+        "extensions": [".mkh"],
+        "configuration": "./language-configuration-mkh.json",
+        "icon": {
+          "light": "./images/mkh-light.svg",
+          "dark": "./images/mkh-dark.svg"
+        }
       }
     ],
     "grammars": [
@@ -95,6 +106,11 @@
         "language": "maker-rules",
         "scopeName": "source.maker",
         "path": "./syntaxes/maker.tmLanguage.json"
+      },
+      {
+        "language": "maker-header",
+        "scopeName": "source.maker.header",
+        "path": "./syntaxes/maker-header.tmLanguage.json"
       }
     ],
     "snippets": [
@@ -113,6 +129,10 @@
       {
         "language": "maker-rules",
         "path": "./snippets/maker.code-snippets"
+      },
+      {
+        "language": "maker-header",
+        "path": "./snippets/maker.code-snippets"
       }
     ],
     "configuration": {
@@ -127,6 +147,11 @@
           "type": "boolean",
           "default": true,
           "description": "Habilitar navegação (Ctrl+Click) para arquivos .mkc e fontes referenciados."
+        },
+        "maker.enableHeaderNavigation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilitar navegação (Ctrl+Click) em arquivos .mkh: símbolos em [DEFINITIONS] e coordenadas em [USAGES]."
         }
       }
     }
