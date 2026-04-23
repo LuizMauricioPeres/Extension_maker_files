@@ -1,0 +1,90 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "MAKER Header Manifest",
+  "scopeName": "source.maker.header",
+  "fileTypes": ["mkh"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#section-headers" },
+    { "include": "#symbol-definition" },
+    { "include": "#usage-entry" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "comment": "Linha de metadado do header: ; CHAVE : valor",
+          "name": "meta.header.maker",
+          "match": "^\\s*(;)\\s*([A-Z][A-Z0-9 ]*)\\s*(:)\\s*(.*)$",
+          "captures": {
+            "1": { "name": "comment.line.semicolon.maker" },
+            "2": { "name": "keyword.other.header-key.maker" },
+            "3": { "name": "punctuation.separator.key-value.maker" },
+            "4": { "name": "string.unquoted.header-value.maker" }
+          }
+        },
+        {
+          "comment": "Linha de separador/decoração: ; ===... ou ; ---...",
+          "name": "comment.line.semicolon.maker",
+          "match": "^\\s*;.*$"
+        }
+      ]
+    },
+    "section-headers": {
+      "comment": "Seções [DEFINITIONS] e [USAGES]",
+      "name": "entity.name.section.maker",
+      "match": "^\\s*\\[([A-Z_][A-Z0-9_]*)\\]\\s*$",
+      "captures": {
+        "1": { "name": "entity.name.section.maker" }
+      }
+    },
+    "symbol-definition": {
+      "comment": "[SYMBOL] -> [TIPO] -> NOME | ESCOPO | LINHA | ATRIBUTOS",
+      "name": "meta.symbol.definition.maker",
+      "match": "^(\\[SYMBOL\\])(\\s*->\\s*)(\\[[A-Z]+\\])(\\s*->\\s*)([A-Za-z0-9_]+)(\\s*\\|\\s*)([A-Z]+)(\\s*\\|\\s*)([0-9]+)(\\s*\\|\\s*)(.*)$",
+      "captures": {
+        "1":  { "name": "keyword.control.symbol-marker.maker" },
+        "2":  { "name": "keyword.operator.arrow.maker" },
+        "3":  { "name": "storage.type.symbol-type.maker" },
+        "4":  { "name": "keyword.operator.arrow.maker" },
+        "5":  { "name": "entity.name.function.maker" },
+        "6":  { "name": "punctuation.separator.pipe.maker" },
+        "7":  { "name": "storage.modifier.scope.maker" },
+        "8":  { "name": "punctuation.separator.pipe.maker" },
+        "9":  { "name": "constant.numeric.line.maker" },
+        "10": { "name": "punctuation.separator.pipe.maker" },
+        "11": { "name": "variable.other.attributes.maker" }
+      }
+    },
+    "usage-entry": {
+      "comment": "[+] SIMBOLO | { [Linha:N, Coluna:N], ... }",
+      "name": "meta.usage.maker",
+      "match": "^(\\[\\+\\])\\s+([A-Za-z0-9_]+)\\s+(\\|)\\s+(\\{)(.+)(\\})",
+      "captures": {
+        "1": { "name": "keyword.control.usage-marker.maker" },
+        "2": { "name": "variable.other.symbol-name.maker" },
+        "3": { "name": "punctuation.separator.pipe.maker" },
+        "4": { "name": "punctuation.definition.location-block.begin.maker" },
+        "5": { "name": "meta.location-list.maker",
+               "patterns": [{ "include": "#coordinate" }] },
+        "6": { "name": "punctuation.definition.location-block.end.maker" }
+      }
+    },
+    "coordinate": {
+      "comment": "[Linha:N, Coluna:N]",
+      "name": "meta.coordinate.maker",
+      "match": "(\\[)(Linha|Coluna)(:)([0-9]+)(,?)(\\s*)(Coluna)?(:)?([0-9]+)?(\\])",
+      "captures": {
+        "1": { "name": "punctuation.definition.coordinate.begin.maker" },
+        "2": { "name": "variable.language.coord-key.maker" },
+        "3": { "name": "punctuation.separator.colon.maker" },
+        "4": { "name": "constant.numeric.line-number.maker" },
+        "5": { "name": "punctuation.separator.comma.maker" },
+        "7": { "name": "variable.language.coord-key.maker" },
+        "8": { "name": "punctuation.separator.colon.maker" },
+        "9": { "name": "constant.numeric.column-number.maker" },
+        "10": { "name": "punctuation.definition.coordinate.end.maker" }
+      }
+    }
+  }
+}
