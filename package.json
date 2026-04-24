@@ -25,13 +25,6 @@
     "type": "git",
     "url": "https://github.com/harbour-tools/maker-language-support"
   },
-  "activationEvents": [
-    "onLanguage:maker-project",
-    "onLanguage:maker-source",
-    "onLanguage:maker-config",
-    "onLanguage:maker-rules",
-    "onLanguage:maker-header"
-  ],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
@@ -161,15 +154,27 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "package": "vsce package"
+    "lint:fix": "eslint src --ext ts --fix",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit": "jest --testPathPattern=__tests__ --coverage",
+    "coverage": "jest --coverage && open coverage/index.html",
+    "package": "vsce package",
+    "pretest": "npm run compile"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
     "@types/node": "^20.0.0",
+    "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^8.0.0",
     "typescript": "^5.3.0",
-    "@vscode/vsce": "^2.22.0"
+    "@vscode/vsce": "^2.22.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.0",
+    "@vscode/test-electron": "^2.3.0",
+    "mocha": "^10.2.0"
   }
 }
